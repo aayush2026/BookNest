@@ -2,14 +2,31 @@ import React from 'react';
 import NavBar from './NavBar';
 import Banner from './Banner';
 import Carousel from './Carousel';
-import Footer from './Footer';
-import list from '../utils/list.json';
+import { useState,useEffect } from 'react';
+// import list from '../utils/list.json';
+import axios from 'axios';
 
 const Home = () => {
+  const [book, setBook] = useState([]);
+  useEffect(() => {
+    const getBook=async ()=>{
+      try{
+        const res=await axios.get("http://localhost:4001/book")
+        // console.log(res.data);
+        setBook(res.data);
+      }
+      catch(error){
+        console.log('error', error)
+      }
+    }
+    getBook();
+  }, [])
+
   // Filter books for different categories
-  const newBooks = list.filter(book => book.new && book.availability);
-  const popularBooks = list.filter(book => book.popular && book.availability);
-  const recommendedBooks = list.filter(book => book.recommended && book.availability);
+  const availableBooks = book.filter(book => book.availability === true);
+  const newBooks = book.filter(book => book.new && book.availability);
+  const popularBooks = book.filter(book => book.popular && book.availability);
+  const recommendedBooks = book.filter(book => book.recommended && book.availability);
 
   return (
     <>
@@ -20,6 +37,7 @@ const Home = () => {
       <Carousel Title="New Books" books={newBooks} />
       <Carousel Title="Popular Books" books={popularBooks} />
       <Carousel Title="Recommended Books" books={recommendedBooks} />
+      <Carousel Title="Available Books" books={availableBooks} />
       
     </>
   );

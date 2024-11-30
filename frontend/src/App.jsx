@@ -1,15 +1,19 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
-import Avaliable from './components/Avaliable'
-import Books from './components/Books'
+// import Avaliable from './components/Avaliable'
 import Home from './components/Home';
 import Bookdetail from './components/Bookdetail';
 import AllBooks from './components/AllBooks';
 import Signup from './components/Signup';
+import { Toaster } from 'react-hot-toast';
+import { useAuth } from './context/authProvider';
 
 const App = () => {
+  
+  const [authUser, setAuthUser] = useAuth()
+  console.log(authUser) 
 
   return (
     <>
@@ -18,11 +22,12 @@ const App = () => {
         <NavBar/>
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/available" element={<Avaliable />} />
-          <Route path="/book/:id" element={<Bookdetail />} />
+          {/* <Route path="/available" element={<Avaliable />} /> */}
+          <Route path="/book/:id" element={authUser?<Bookdetail/>: <Navigate to="/signup"/>} />
           <Route path="/books" element={<AllBooks/>}/>
           <Route path="/signup" element={<Signup/>}/>
         </Routes>
+        <Toaster />
         <Footer />
       </Router>
     </>

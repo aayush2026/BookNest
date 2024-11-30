@@ -11,7 +11,7 @@ const Card = ({ id, title, image,price, route, className}) => {
 
   return (
     <>
-      <div className={`carousel-item md:w-56 md:h-88 w-40 h-76 rounded-xl md:mx-0 mx-2 my-4 bg-whitev 
+      <div className={`carousel-item md:w-56 md:h-88 w-40 h-76 rounded-xl md:mx-1 mx-2 my-4 bg-whitev 
       transform transition-transform duration-300 hover:scale-105 cursor-pointer flex flex-col ${className}`}
       onClick={handleCardClick}>
         <div>
